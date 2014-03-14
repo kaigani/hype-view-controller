@@ -1,0 +1,102 @@
+<!-- UNIT TEST : hypeViewController.js -->
+
+<html>
+
+<script src="../hypeViewController.js"></script>
+
+<script>
+
+	var output;
+
+	window.onload = function(){
+
+		output = document.getElementById('output');
+		output.innerHTML = "<hr>Document loaded.<hr>";
+
+		output.innerHTML += "HVC: "+test(typeof HVC !== 'undefined')+"<br />";
+		output.innerHTML += "HVC.view: "+test(typeof HVC.view !== 'undefined')+"<br />";
+		output.innerHTML += "HVC.eventManager: "+test(typeof HVC.eventManager !== 'undefined')+"<br /><hr>";
+
+		// Test global properties
+		HVC.setProperty('testProperty',123);
+		output.innerHTML += "HVC.setProperty / .getProperty: "+test( HVC.getProperty('testProperty') === 123 );
+		output.innerHTML += "<hr>";
+
+		// Test View object
+		var viewObject = HVC.view.addViewObject( document.getElementById('view-1') );
+		output.innerHTML += "viewObject: "+test(typeof viewObject !== 'undefined')+"<br />";
+		viewObject.setText('viewObject.setText: OK');
+		viewObject.update(); // Must update or it won't display
+		viewObject.setText('viewObject.setText: OK, view.update: OK');
+		HVC.view.update();
+
+		// Test EventManager
+		output = document.getElementById('output-2');
+		output.innerHTML += "<hr>";
+
+		output.innerHTML += "Adding Event Listener to 'myEvent' <br />";
+		var myEventHandler = function(e){
+
+			output.innerHTML += "Event Received. event.type ["+e.type+"], event.detail ["+e.detail+"]<br/>";
+		};
+		HVC.eventManager.addEventListener('myEvent', myEventHandler);
+
+		output.innerHTML += "Sending 'myEvent' with data<br />";
+		HVC.eventManager.send('myEvent','FIRST');
+		HVC.eventManager.send('myEvent','SECOND');
+
+		output.innerHTML += "Removing Event Listener from 'myEvent' <br />";
+		HVC.eventManager.removeEventListener('myEvent', myEventHandler);
+		HVC.eventManager.send('myEvent','DO NOTHING!');
+
+		output.innerHTML += "<hr>";
+		
+	}
+
+	function test(condition){
+
+		return condition ? "OK" : "FAIL";
+	}
+
+</script>
+<style>
+	.clearfix:before,  
+	.clearfix:after {  
+	    content: " ";  
+	    display: table;  
+	}  
+	.clearfix:after {  
+	    clear: both;  
+	}  
+	/* For IE 6/7 only */  
+	.clearfix {  
+	    *zoom: 1;  
+	}
+</style>
+<style>
+	body {
+	 
+	 	-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	.box {
+
+		padding: 20px;
+		margin: 12px;
+		border: 1px #000000 solid;
+		background-color: #EEEEEE;
+	}
+</style>
+
+<body>
+	Placeholder for testing the HVC namespace.
+	<div id="output"></div>
+	<div id="view-1" class="box">This text should not appear!</div>
+	<div id="output-2"></div>
+</body>
+</html>
