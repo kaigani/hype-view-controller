@@ -9,3 +9,6 @@
 	window.HypeViewController = HypeViewController;
 
 })(window);
+
+// For ease of use in Hype
+window.HVC = new HypeViewController();

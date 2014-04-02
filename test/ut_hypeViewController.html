@@ -3,13 +3,16 @@
 <html>
 
 <!-- SOURCE -->
+<!--
 <script src="../src/_globals.js"></script>
 <script src="../src/View.js"></script>
 <script src="../src/EventManager.js"></script>
 <script src="../src/HypeViewController.js"></script>
+<script>window.HVC = new HypeViewController();</script>
+-->
 
 <!-- BUILD -->
-<!-- <script src="../build/hypeViewController.js"></script> -->
+<script src="../build/hypeViewController.min.js"></script>
 
 <script>
 
@@ -17,7 +20,7 @@
 
 	window.onload = function(){
 
-		HVC = new HypeViewController();
+		//HVC = new HypeViewController();
 
 		output = document.getElementById('output');
 		output.innerHTML = "<hr>Document loaded.<hr>";
