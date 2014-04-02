@@ -42,10 +42,10 @@ transitions, and the core application logic won't need to change.  You could
 even use the timeline to automate events that would make the calculator
 operate itself.
 
-**How to use hypeViewController.js**
+**How to use HypeViewController.js**
 
-Adding 'hypeViewController.js' to your project resources will create the
-hypeViewController class, and it will instantiate a version into the HVC
+Adding 'HypeViewController.js' to your project resources will create the
+HypeViewController class, and it will instantiate a version into the HVC
 namespace.
 
 
