@@ -1,14 +1,23 @@
-<!-- UNIT TEST : hypeViewController.js -->
+<!-- UNIT TEST : HypeViewController.js -->
 
 <html>
 
-<script src="../hypeViewController.js"></script>
+<!-- SOURCE -->
+<script src="../src/_globals.js"></script>
+<script src="../src/View.js"></script>
+<script src="../src/EventManager.js"></script>
+<script src="../src/HypeViewController.js"></script>
+
+<!-- BUILD -->
+<!-- <script src="../build/hypeViewController.js"></script> -->
 
 <script>
 
 	var output;
 
 	window.onload = function(){
+
+		HVC = new HypeViewController();
 
 		output = document.getElementById('output');
 		output.innerHTML = "<hr>Document loaded.<hr>";
@@ -27,6 +36,8 @@
 		output.innerHTML += "viewObject: "+test(typeof viewObject !== 'undefined')+"<br />";
 		viewObject.setText('viewObject.setText: OK');
 		viewObject.update(); // Must update or it won't display
+		// getViewObject
+		viewObject = HVC.view.getViewObject('view-1');
 		viewObject.setText('viewObject.setText: OK, view.update: OK');
 		HVC.view.update();
 
@@ -50,6 +61,22 @@
 		HVC.eventManager.send('myEvent','DO NOTHING!');
 
 		output.innerHTML += "<hr>";
+
+		// Test update loop
+		output.innerHTML += "Starting update loop. <br/>";
+		HVC.start();
+
+		viewObject = HVC.view.addViewObject( document.getElementById('count'));
+
+		HVC.eventManager.addEventListener('tick', function(e){
+
+			var count = e.detail;
+			viewObject = HVC.view.getViewObject('count');
+			viewObject.setText(count);
+		});
+	
+
+
 		
 	}
 
@@ -98,5 +125,6 @@
 	<div id="output"></div>
 	<div id="view-1" class="box">This text should not appear!</div>
 	<div id="output-2"></div>
+	<div>tick count: <span id="count">n/a</span></div>
 </body>
 </html>
